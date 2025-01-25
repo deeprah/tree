@@ -1,0 +1,65 @@
+class Solution {
+  public:
+  void lbound(Node* root,vector<int> &ans)
+{
+    if(root==NULL) return;
+    if(root->left!=NULL || root->right!=NULL)
+    {
+        ans.push_back(root->data);
+    }
+    if(root->left!=NULL)
+    {
+    lbound(root->left,ans);
+    }
+    else if(root->right!=NULL)
+    {
+        lbound(root->right,ans);
+    }
+}
+void leaf(Node* root,vector<int> &ans)
+{
+    if(root==NULL) return;
+    if(root->left==NULL && root->right==NULL)
+    {
+        ans.push_back(root->data);
+    }
+    leaf(root->left,ans);
+    leaf(root->right,ans);
+}
+void rbound(Node* root,vector<int> &ans)
+{
+      if(root==NULL) return;
+      if(root->right!=NULL)
+      {
+      rbound(root->right,ans);
+      }
+      else if(root->left!=NULL)
+      {
+          rbound(root->left,ans);
+      }
+      if(root->left!=NULL || root->right!=NULL)
+      {
+         ans.push_back(root->data);
+      }
+}
+    vector<int> boundaryTraversal(Node *root) {
+        vector<int> ans;
+        if(root==NULL) return ans;
+        if(root->left==NULL && root->right==NULL)
+        {
+            ans.push_back(root->data);
+            return ans;
+        }
+        ans.push_back(root->data);
+        if(root->left!=NULL)
+        {
+        lbound(root->left,ans);
+        }
+        leaf(root,ans);
+        if(root->right!=NULL)
+        {
+        rbound(root->right,ans);
+        }
+        return ans;
+    }
+};
